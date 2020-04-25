@@ -8,13 +8,15 @@ import {
   NavigationStackScreenOptions
 } from "react-navigation";
 import { CStyles } from '../CStyles.tsx';
-import Firebase from '../config/Firebase';
+import Firebase, { firestore } from '../config/Firebase.tsx';
 
 export default function Home({navigation}) {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const ref = firestore.collection('users');
 
   function onAuthStateChanged(user) {
     setUser(user);
@@ -47,9 +49,16 @@ export default function Home({navigation}) {
           secureTextEntry={true}
         />
         <CButton title='Log In' onPress= {() => {
-          Firebase.auth()
+          firebase.auth()
             .signInWithEmailAndPassword(email,password)
-            .then(() => navigation.navigate('RouteActivities', { screen: 'RouteInventory' }))
+            .then(() => {
+              ref.doc({email: email}).get().then(documentSnapshot => {
+                if(documentSnapshot.exists){
+                  console.log(documentSnapshot);
+                  navigation.navigate('RouteActivities', { screen: 'RouteInventory', user: documentSnapshot.data() });
+                }
+              })
+            })
             .catch(error => {
               if(error.code === 'auth/invalid-email') {
                 Alert.alert(
@@ -98,6 +107,10 @@ export default function Home({navigation}) {
       </View>
     );
   }
-  navigation.navigate('RouteActivities', { screen: 'RouteInventory' });
+  ref.doc(email).get().then(documentSnapshot => {
+    if(documentSnapshot.exists){
+      navigation.navigate('RouteActivities', { screen: 'RouteInventory', user: documentSnapshot.data() });
+    }
+  })
   return null;
 }

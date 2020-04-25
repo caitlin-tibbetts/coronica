@@ -32,10 +32,7 @@ const customDrawerNavigator = (props) => (
     <CDrawerButton title='Log out' onPress={() => {
       Firebase.auth()
         .signOut()
-        .then(() => {
-          console.log('User signed out!');
-          props.navigation.navigate('RouteHome')
-        })}}/>
+        .then(() => props.navigation.navigate('RouteHome'))}}/>
   </SafeAreaView>
 )
 

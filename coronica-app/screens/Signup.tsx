@@ -7,12 +7,16 @@ import {
   NavigationStackScreenOptions
 } from "react-navigation";
 import { CStyles } from '../CStyles.tsx';
-import Firebase from '../config/Firebase';
+import Firebase, { firestore } from '../config/Firebase.tsx';
 
 export default function Signup({navigation}) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [newUser, setNewUser] = useState();
+
+  const ref = firestore.collection('users');
 
   useEffect(() => {
     const back = BackHandler.addEventListener("hardwareBackPress", () => {
@@ -50,7 +54,16 @@ export default function Signup({navigation}) {
       <CButton title='Sign Up!' onPress={() => {
         Firebase.auth()
             .createUserWithEmailAndPassword(email, password)
-            .then(() => navigation.navigate('RouteActivities', { screen: 'RouteInventory' }))
+            .then(() => {js
+              ref.add({
+                name: name,
+                email: email,
+                points: 0,
+              }).then(res => {
+                const newUser = {name: name, email:email, points:0};
+                navigation.navigate('RouteActivities', { screen: 'RouteInventory',  user: newUser});
+              })
+            })
             .catch(error => {
               if(error.code === 'auth/email-already-in-use') {
                 Alert.alert(

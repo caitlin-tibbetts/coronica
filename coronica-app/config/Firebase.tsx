@@ -1,4 +1,6 @@
-import firebase from 'firebase'
+import firebase from '@firebase/app';
+import '@firebase/firestore';
+
 import {
     API_KEY,
     AUTH_DOMAIN,
@@ -21,6 +23,7 @@ const firebaseConfig = {
 }
 
 // Initialize Firebase
-const Firebase = firebase.initializeApp(firebaseConfig)
+const Firebase = firebase.initializeApp(firebaseConfig, 'Coronica');
+export const firestore = Firebase.firestore();
 
-export default Firebase
+export default Firebase;
