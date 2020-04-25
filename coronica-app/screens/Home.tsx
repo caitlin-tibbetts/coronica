@@ -4,15 +4,13 @@ import CButton from '../components/CButton';
 import CLink from '../components/CLink';
 import { CStyles } from '../CStyles';
 import Firebase from '../config/Firebase';
-import '@firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 
 export default function Home({navigation}) {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const firestore = Firebase.firestore();
 
   function onAuthStateChanged(user) {
     setUser(user);

@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, TextInput, Alert, BackHandler } from 'react-nat
 import CButton from '../components/CButton';
 import { CStyles } from '../CStyles';
 import Firebase from '../config/Firebase';
-import '@firebase/firestore';
+import '@react-native-firebase/firestore';
+import '@firebase/auth';
 
 export default function Signup({navigation}) {
   const [name, setName] = useState('');
@@ -11,8 +12,6 @@ export default function Signup({navigation}) {
   const [password, setPassword] = useState('');
 
   const [newUser, setNewUser] = useState();
-
-  const firestore = Firebase.firestore();
 
   useEffect(() => {
     const back = BackHandler.addEventListener("hardwareBackPress", () => {

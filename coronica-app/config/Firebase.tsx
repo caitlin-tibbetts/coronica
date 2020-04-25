@@ -1,5 +1,5 @@
 import firebase from '@firebase/app';
-import '@firebase/firestore';
+import '@react-native-firebase/firestore';
 
 import {
     API_KEY,
