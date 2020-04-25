@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
-import CButton from '../components/CButton.tsx';
-import CLink from '../components/CLink.tsx';
-import {
-  NavigationScreenComponent,
-  NavigationScreenProps,
-  NavigationStackScreenOptions
-} from "react-navigation";
-import { CStyles } from '../CStyles.tsx';
-import Firebase, { firestore } from '../config/Firebase.tsx';
+import CButton from '../components/CButton';
+import CLink from '../components/CLink';
+import { CStyles } from '../CStyles';
+import Firebase from '../config/Firebase';
+import '@firebase/firestore';
 
 export default function Home({navigation}) {
   const [initializing, setInitializing] = useState(true);
@@ -16,12 +12,13 @@ export default function Home({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const ref = firestore.collection('users');
+  const firestore = Firebase.firestore();
 
   function onAuthStateChanged(user) {
     setUser(user);
     if (initializing) setInitializing(false);
   };
+
 
   useEffect(() => {
     const subscriber = Firebase.auth().onAuthStateChanged(onAuthStateChanged);
@@ -49,10 +46,10 @@ export default function Home({navigation}) {
           secureTextEntry={true}
         />
         <CButton title='Log In' onPress= {() => {
-          firebase.auth()
+          Firebase.auth()
             .signInWithEmailAndPassword(email,password)
             .then(() => {
-              ref.doc({email: email}).get().then(documentSnapshot => {
+              firestore.collection('users').doc(email).get().then(documentSnapshot => {
                 if(documentSnapshot.exists){
                   console.log(documentSnapshot);
                   navigation.navigate('RouteActivities', { screen: 'RouteInventory', user: documentSnapshot.data() });
@@ -107,7 +104,7 @@ export default function Home({navigation}) {
       </View>
     );
   }
-  ref.doc(email).get().then(documentSnapshot => {
+  firestore.collection('users').doc(email).get().then(documentSnapshot => {
     if(documentSnapshot.exists){
       navigation.navigate('RouteActivities', { screen: 'RouteInventory', user: documentSnapshot.data() });
     }

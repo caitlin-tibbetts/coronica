@@ -23,7 +23,6 @@ const firebaseConfig = {
 }
 
 // Initialize Firebase
-const Firebase = firebase.initializeApp(firebaseConfig, 'Coronica');
-export const firestore = Firebase.firestore();
+const Firebase = firebase.initializeApp(firebaseConfig);
 
 export default Firebase;

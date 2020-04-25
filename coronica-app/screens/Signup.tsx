@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Alert, BackHandler } from 'react-native';
-import CButton from '../components/CButton.tsx';
-import {
-  NavigationScreenComponent,
-  NavigationScreenProps,
-  NavigationStackScreenOptions
-} from "react-navigation";
-import { CStyles } from '../CStyles.tsx';
-import Firebase, { firestore } from '../config/Firebase.tsx';
+import CButton from '../components/CButton';
+import { CStyles } from '../CStyles';
+import Firebase from '../config/Firebase';
+import '@firebase/firestore';
 
 export default function Signup({navigation}) {
   const [name, setName] = useState('');
@@ -16,7 +12,7 @@ export default function Signup({navigation}) {
 
   const [newUser, setNewUser] = useState();
 
-  const ref = firestore.collection('users');
+  const firestore = Firebase.firestore();
 
   useEffect(() => {
     const back = BackHandler.addEventListener("hardwareBackPress", () => {
@@ -47,15 +43,14 @@ export default function Signup({navigation}) {
       <TextInput
         style={CStyles.textInputStyle}
         value={ password }
-        onChangeText={password => setPassword(password)}
+        onChangeText={password => setPassword(password)} 
         placeholder='Password'
         secureTextEntry={true}
       />
       <CButton title='Sign Up!' onPress={() => {
-        Firebase.auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then(() => {js
-              ref.add({
+        Firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(() => {
+              firestore.collection('users').add({
                 name: name,
                 email: email,
                 points: 0,

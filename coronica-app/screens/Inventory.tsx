@@ -5,7 +5,7 @@ import {
   NavigationScreenProps,
   NavigationStackScreenOptions
 } from "react-navigation";
-import { CStyles } from '../CStyles.tsx';
+import { CStyles } from '../CStyleså';
 
 export default function Inventory({navigation}) {
 
