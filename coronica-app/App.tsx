@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Button, SafeAreaView, ScrollView, Dimensions } from 'react-native';
 import { createSwitchNavigator, createAppContainer} from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack'
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
-import { NavigationContainer } from '@react-navigation/native';
+
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
+//import Firebase from './config/Firebase';
+import auth from '@react-native-firebase/auth';
+
 import Home from "./screens/Home";
 import Signup from "./screens/Signup";
 import Inventory from "./screens/Inventory";
@@ -12,10 +16,8 @@ import SelfCare from "./screens/SelfCare";
 import Social from "./screens/Social";
 import Clicker from "./screens/Clicker";
 import Health from "./screens/Health";
-import CDrawerButton from './components/CDrawerButton.tsx';
-import { AppLoading } from 'expo';
-import * as Font from 'expo-font';
-import Firebase from './config/Firebase';
+
+import CDrawerButton from './components/CDrawerButton';
 
 const getFonts = () => Font.loadAsync({
   'montserrat-italic': require('./assets/fonts/Montserrat-Italic.ttf'),
@@ -30,7 +32,7 @@ const customDrawerNavigator = (props) => (
       <DrawerItems {...props}/>
     </ScrollView>
     <CDrawerButton title='Log out' onPress={() => {
-      Firebase.auth()
+      auth()
         .signOut()
         .then(() => props.navigation.navigate('RouteHome'))}}/>
   </SafeAreaView>

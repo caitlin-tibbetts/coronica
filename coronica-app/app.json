@@ -22,7 +22,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "com.earthxhack2020.coronica"
+    },
+    "android": {
+      "package": "com.earthxhack2020.coronica"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }

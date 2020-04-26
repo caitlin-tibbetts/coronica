@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "193366513135",
+    "firebase_url": "https://coronica.firebaseio.com",
+    "project_id": "coronica",
+    "storage_bucket": "coronica.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:193366513135:android:4de23e994a85c5993ad21a",
+        "android_client_info": {
+          "package_name": "com.earthxhack2020.coronica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "193366513135-gm28so8g7tu60742mnukt5bd7lovp7pi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBf_0usTiWN8ip8lcPGlmr6S-zQlub-HU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "193366513135-gm28so8g7tu60742mnukt5bd7lovp7pi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
