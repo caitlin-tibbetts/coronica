@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Alert, BackHandler } from 'react-native';
+
+//import Firebase from '../config/Firebase';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 import CButton from '../components/CButton';
 import { CStyles } from '../CStyles';
-import Firebase from '../config/Firebase';
-import '@react-native-firebase/firestore';
-import '@firebase/auth';
 
 export default function Signup({navigation}) {
   const [name, setName] = useState('');
@@ -47,9 +49,9 @@ export default function Signup({navigation}) {
         secureTextEntry={true}
       />
       <CButton title='Sign Up!' onPress={() => {
-        Firebase.auth().createUserWithEmailAndPassword(email, password)
+        auth().createUserWithEmailAndPassword(email, password)
             .then(() => {
-              firestore.collection('users').add({
+              firestore().collection('users').add({
                 name: name,
                 email: email,
                 points: 0,

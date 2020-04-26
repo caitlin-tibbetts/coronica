@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
+
+//import Firebase from '../config/Firebase';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
+import { CStyles } from '../CStyles';
+
 import CButton from '../components/CButton';
 import CLink from '../components/CLink';
-import { CStyles } from '../CStyles';
-import Firebase from '../config/Firebase';
-import firestore from '@react-native-firebase/firestore';
 
 export default function Home({navigation}) {
   const [initializing, setInitializing] = useState(true);
@@ -19,7 +23,7 @@ export default function Home({navigation}) {
 
 
   useEffect(() => {
-    const subscriber = Firebase.auth().onAuthStateChanged(onAuthStateChanged);
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
 
@@ -44,7 +48,7 @@ export default function Home({navigation}) {
           secureTextEntry={true}
         />
         <CButton title='Log In' onPress= {() => {
-          Firebase.auth()
+          auth()
             .signInWithEmailAndPassword(email,password)
             .then(() => {
               firestore.collection('users').doc(email).get().then(documentSnapshot => {
