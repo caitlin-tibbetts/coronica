@@ -54,7 +54,7 @@ function RegisterPage(props) {
     };
   });
 
-  if (!loggedIn) {
+  if (loggedIn) {
     return(
       <>
         <Login email={email}/>
